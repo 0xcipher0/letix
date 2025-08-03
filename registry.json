@@ -4,6 +4,19 @@
   "homepage": "https://acme.com",
   "items": [
     {
+      "name": "numerical-input",
+      "type": "registry:ui",
+      "title": "Numerical input",
+      "description": "A numerical input component",
+      "registryDependencies": ["input"],
+      "files": [
+        {
+          "path": "registry/default/ui/numerical-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "hello-world",
       "type": "registry:component",
       "title": "Hello World",

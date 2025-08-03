@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "numerical-input",
+  "type": "registry:ui",
+  "title": "Numerical input",
+  "description": "A numerical input component",
+  "registryDependencies": [
+    "input"
+  ],
+  "files": [
+    {
+      "path": "registry/default/ui/numerical-input.tsx",
+      "content": "import * as React from 'react'\nimport { Input } from '@/components/ui/input'\n\nconst inputRegex = RegExp(`^\\\\d*(?:\\\\\\\\[.])?\\\\d*$`)\n\nconst escapeRegExp = (string: string): string => {\n    return string.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')\n}\n\nexport interface NumericalInputProps extends Omit<React.ComponentProps<typeof Input>, 'onChange' | 'value' | 'type'> {\n    value: string | number | undefined\n    onChange: (value: string) => void\n}\n\nconst NumericalInput = React.forwardRef<React.ElementRef<typeof Input>, NumericalInputProps>(\n    ({ className, value, onChange, placeholder = '0.0', ...props }, ref) => {\n        const enforcer = (nextUserInput: string) => {\n            if (nextUserInput === '' || inputRegex.test(escapeRegExp(nextUserInput))) {\n                onChange(nextUserInput)\n            }\n        }\n\n        return (\n            <Input\n                ref={ref}\n                className={className}\n                value={value}\n                onChange={(event) => {\n                    enforcer(event.target.value.replace(/,/g, '.'))\n                }}\n                inputMode=\"decimal\"\n                autoComplete=\"off\"\n                autoCorrect=\"off\"\n                type=\"text\"\n                pattern=\"^[0-9]*[.,]?[0-9]*$\"\n                placeholder={placeholder}\n                spellCheck=\"false\"\n                {...props}\n            />\n        )\n    },\n)\n\nNumericalInput.displayName = 'NumericalInput'\n\nexport { NumericalInput }\n",
+      "type": "registry:ui"
+    }
+  ]
+}
